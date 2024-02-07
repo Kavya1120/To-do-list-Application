@@ -5,6 +5,9 @@ import { HeaderComponent } from "src/app/todos/components/header/header.componen
 import { TodoService } from "./services/todos.service";
 import { MainComponent } from "./components/main/main.component";
 import { FilterEnum } from "./types/filter.enum";
+import { CommonModule } from "@angular/common";
+import { SingleTodoComponent } from "./components/singleTodo/todo.component";
+import { FooterComponent } from "./components/footer/footer.component";
 
 const routes: Routes = [
     {
@@ -14,8 +17,8 @@ const routes: Routes = [
 ]
 
 @NgModule({
-    declarations:[TodosComponent,HeaderComponent,MainComponent],
-    imports:[RouterModule.forChild(routes)],
+    declarations:[TodosComponent,HeaderComponent,MainComponent, SingleTodoComponent, FooterComponent],
+    imports:[CommonModule ,RouterModule.forChild(routes)],
     providers: [TodoService]
 })
 

@@ -1,5 +1,9 @@
 export interface TodoInterface {
-    id: string;
-    text: string;
-    isCompleted: boolean;
+    task_Id?: string | null;
+    title: string;
+    description: string;
+    dueDate: Date;
+    isComplete: boolean;
+    createdDate: Date;
+    modifiedDate:Date;
 }

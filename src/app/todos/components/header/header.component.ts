@@ -20,9 +20,18 @@ export class HeaderComponent {
        
     }
 
-    addTodo(): void{
-        // console.log("from addtodo", this.text);
-        this.todoService.addTodo(this.text)
-        this.text = ''
+    // addTodo(): void{
+    //     // console.log("from addtodo", this.text);
+    //     this.todoService.addTodo(this.text)
+    //     this.text = ''
+    // }
+
+    addTodo(): void {
+        if (this.text.trim() !== '') {
+            this.todoService.addTodo(this.text)
+            this.text = '';
+        }
     }
+
+    
 }

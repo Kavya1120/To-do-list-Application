@@ -1,9 +1,10 @@
 <header class="header">
-    <h1>todos</h1>
+    <h1>To-do-List</h1>
     <input 
     class="new-todo"
     placeholder="Add your tasks here.." 
     autoFocus 
+    required
     [value] = "text"
     (keyup) = "changeText($event)"
     (keyup.enter) = "addTodo()"
