@@ -1,0 +1,7 @@
+<div class="todoapp">
+    <div class="search-container">
+        <input class="new-todo searchbar" type="text" placeholder="Search" [value]="searchText" (keyup)="changeText($event)" (keyup.enter)="updateSearchText()">
+        <button class="destroy-icon" (click)="clearSearchText()"><i class="fas fa-times"></i></button>
+        <i class="fas fa-search search-icon"></i>
+    </div>
+</div>

@@ -24,7 +24,12 @@ button {
 body {
 	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	line-height: 1.4em;
-	background: #f5f5f5;
+	background-image: url(./app/todos/images/todo.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+    // background-position: center;
+	background-size:100% 100vh;
+	background-attachment: fixed;
 	color: #111111;
 	min-width: 230px;
 	max-width: 550px;
@@ -39,6 +44,7 @@ body {
 	color: white !important;
 	border-radius: 4px;
 	padding: 3px;
+	cursor: pointer;
 }
 
 :focus {
@@ -51,10 +57,15 @@ body {
 
 .todoapp {
 	background: #fff;
-	margin: 130px 0 40px 0;
+	// margin: 130px 0 40px 0;
+	margin: 130px 0 -70px 0;
 	position: relative;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
 	            0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.searchbar{
+	padding: 10px 10px 10px 10px !important;
 }
 
 .todoapp input::-webkit-input-placeholder {
@@ -75,17 +86,80 @@ body {
 	color: rgba(0, 0, 0, 0.4);
 }
 
-.todoapp h1 {
+.heading h1 {
 	position: absolute;
-	top: -140px;
+	top: -35px;
 	width: 100%;
-	font-size: 80px;
+	margin-left: -32%;
+	font-size: 74px;
 	font-weight: 200;
 	text-align: center;
-	color: #b83f45;
+	// color: #b83f45;
+	color: #1f494d;
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
+}
+
+.search-container {
+    position: relative;
+	display: flex;
+}
+
+.destroy-icon {
+    position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px; 
+	top: 26%;
+	right: 53px;
+	font-size: x-large;
+}
+.fa-times::before{
+	color: lightgray;
+}
+.destroy-icon:hover .fa-times::before {
+    color: darkgray;
+}
+.edit-label::after {
+    content: "Double click to edit";
+    visibility: hidden;
+    position: absolute;
+    top: 90%;
+    left: 30%;
+	font-size: small;
+    background-color: #f0f0f0;
+    padding: 5px;
+	color: gray;
+	
+    // border: 1px solid #ccc;
+    // border-radius: 5px;
+}
+
+.edit-label:hover{
+	cursor: pointer;
+}
+
+.edit-label:hover::after {
+    visibility: visible;
+	
+}
+
+  
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #ccc; 
+    pointer-events: none; 
+	font-size: x-large;
+}
+
+.new-todo.searchbar {
+    padding-right: 30px; 
 }
 
 .new-todo,
@@ -136,19 +210,21 @@ body {
 	position: absolute;
 	top: -52px;
 	left: -13px;
-	-webkit-transform: rotate(90deg);
-	transform: rotate(90deg);
+	margin-top: 1.5%;
+	// -webkit-transform: rotate(90deg);
+	// transform: rotate(90deg);
 }
 
 .toggle-all + label:before {
-	content: '❯';
-	font-size: 22px;
+	content: ">";
+    font-family: "Font Awesome 5 Free";
+	font-size: 27px;
 	color: #e6e6e6;
 	padding: 10px 27px 10px 27px;
 }
 
 .toggle-all:checked + label:before {
-	color: #737373;
+	color: rgb(17, 181, 17);
 }
 
 .todo-list {
@@ -311,7 +387,8 @@ body {
 }
 
 .filters li a {
-	color: inherit;
+	color: white;
+	background-color: #21757d;
 	margin: 3px;
 	padding: 3px 7px;
 	text-decoration: none;
@@ -321,10 +398,14 @@ body {
 
 .filters li a:hover {
 	border-color: rgba(175, 47, 47, 0.1);
+	background-color: #529fa6
+	// color: 
 }
 
 .filters li a.selected {
 	border-color: rgba(175, 47, 47, 0.2);
+	background-color: #529fa6
+
 }
 
 .clear-completed,
@@ -374,6 +455,13 @@ html .clear-completed:active {
 
 	.todo-list li .toggle {
 		height: 40px;
+	}
+}
+
+@media screen and (max-width: 768px){
+	.heading h1{
+		font-size: 60px;
+		margin-left:-3%
 	}
 }
 
@@ -528,3 +616,4 @@ hr {
 		left: 8px;
 	}
 }
+

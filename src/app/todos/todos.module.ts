@@ -8,6 +8,7 @@ import { FilterEnum } from "./types/filter.enum";
 import { CommonModule } from "@angular/common";
 import { SingleTodoComponent } from "./components/singleTodo/todo.component";
 import { FooterComponent } from "./components/footer/footer.component";
+import { SearchComponent } from "./components/searchBar/search.component";
 
 const routes: Routes = [
     {
@@ -17,7 +18,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-    declarations:[TodosComponent,HeaderComponent,MainComponent, SingleTodoComponent, FooterComponent],
+    declarations:[TodosComponent,HeaderComponent,MainComponent, SingleTodoComponent, FooterComponent, SearchComponent],
     imports:[CommonModule ,RouterModule.forChild(routes)],
     providers: [TodoService]
 })

@@ -43,7 +43,13 @@ export class FooterComponent{
     }
 
     deleteAllTasks(): void {
-       this.todosService.removeAllTasks()
+        const confirmstatus = window.confirm('Are you sure you want to delete?');
+        if(confirmstatus){
+            this.todosService.removeAllTasks()
+        }
+        else{
+            console.log("cancelled deleting the task");
+        }
       }
       
       

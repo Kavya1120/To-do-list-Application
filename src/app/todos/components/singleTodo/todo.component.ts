@@ -61,8 +61,12 @@ export class SingleTodoComponent implements OnInit,OnChanges{
     const isChecked = (event.target as HTMLInputElement).checked;
     if (isChecked) {
         this.todoProps.isComplete = true;
-        this.changeTodo();
+        
     }
+    else{
+      this.todoProps.isComplete = false;
+    }
+    this.changeTodo();
 }
   
   // changeTodo(changeItem:Event): void{

@@ -11,6 +11,13 @@ import {takeUntil } from 'rxjs/operators';
 export class TodoService implements OnDestroy{
     todos$ =  new BehaviorSubject<TodoInterface[]>([]);
     filter$ =  new BehaviorSubject<FilterEnum>(FilterEnum.all)
+    private searchTextSubject = new BehaviorSubject<string>('');
+
+  searchText$ = this.searchTextSubject.asObservable();
+
+  setSearchText(searchText: string): void {
+    this.searchTextSubject.next(searchText);
+  }
     
     private ngUnsubscribe = new Subject<void>();
     private apiUrl = 'http://localhost:5291/api/ToDoList';
@@ -31,7 +38,6 @@ export class TodoService implements OnDestroy{
     addTodo(title: string): void {
         const newTodo: TodoInterface = {
             title,
-            description: 'test',
             dueDate: new Date('2024-02-02T06:03:44.177Z'),
             isComplete: false,
             createdDate: new Date('2024-02-02T06:03:44.177Z'),

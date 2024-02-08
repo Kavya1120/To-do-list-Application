@@ -6,7 +6,7 @@
         [checked]="todoProps.isComplete"
         (change)="changeTodoStatus($event)"
       />
-      <label (dblclick)="setTodoInEditMode()">{{ todoProps.title }}</label>
+      <label (dblclick)="setTodoInEditMode()" class="edit-label">{{ todoProps.title }}</label>
       <button class="destroy" (click)="removeTodo()" ></button>
     </div>
     <ng-container *ngIf="isEditingProps">
