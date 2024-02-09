@@ -27,22 +27,8 @@ export class MainComponent implements OnInit, OnDestroy {
         
     }
 
-    ngOnInit(): void {
-
-        
-  
-        this.todoService.getTasks().pipe(
-            takeUntil(this.ngUnsubscribe)
-        ).subscribe(
-            tasks => {
-                this.todoService.todos$.next(tasks);
-                console.log("data of getTasks ===> ", tasks);
-            },
-            error => {
-                console.log("Logged Error: ", error);
-            }
-        );
-
+    ngOnInit(): void {  
+        this.todoService.getTasks();
         this.noTodoClass$ = this.todoService.todos$.pipe(
             map(tasks => tasks.length === 0),
             takeUntil(this.ngUnsubscribe)

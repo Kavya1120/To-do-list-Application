@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
 import { TodoInterface } from "../../types/todo.interface";
 import { TodoService } from "../../services/todos.service";
 
@@ -23,6 +23,18 @@ export class SingleTodoComponent implements OnInit,OnChanges{
   constructor(private todosService: TodoService){
 
   }
+  exitEditMode() {
+    this.isEditingProps = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    if (!targetElement.closest('.edit')) {
+      this.exitEditMode();
+    }
+  }
+
   ngOnInit(): void {
     this.editingText = this.todoProps.title;
   }

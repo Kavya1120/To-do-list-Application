@@ -210,13 +210,12 @@ body {
 	position: absolute;
 	top: -52px;
 	left: -13px;
-	margin-top: 1.5%;
-	// -webkit-transform: rotate(90deg);
-	// transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
 }
 
 .toggle-all + label:before {
-	content: ">";
+	content: '❯';
     font-family: "Font Awesome 5 Free";
 	font-size: 27px;
 	color: #e6e6e6;
@@ -316,13 +315,13 @@ body {
 	height: 40px;
 	margin: auto 0;
 	font-size: 30px;
-	color: #cc9a9a;
+	color: #cf6363;
 	margin-bottom: 11px;
 	transition: color 0.2s ease-out;
 }
 
 .todo-list li .destroy:hover {
-	color: #af5b5e;
+	color: #e32027;
 }
 
 .todo-list li .destroy:after {

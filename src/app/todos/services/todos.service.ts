@@ -29,9 +29,17 @@ export class TodoService implements OnDestroy{
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
     }
-    getTasks(): Observable<TodoInterface[]>{
-        return this.http.get<TodoInterface[]>(this.apiUrl);
+    async getTasks(): Promise<TodoInterface[]> {
+        try {
+            const tasks = await this.http.get<TodoInterface[]>(this.apiUrl).toPromise();
+            this.todos$.next(tasks)
+            return tasks;
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+            throw error; 
+        }
     }
+
 
    
     
@@ -46,18 +54,17 @@ export class TodoService implements OnDestroy{
         
         this.http.post<TodoInterface>(`${this.apiUrl}`, newTodo).pipe(
             takeUntil(this.ngUnsubscribe)).subscribe(
-            (response) => {
+                
+                async(response) => {
                 console.log('Task added successfully', response); 
                 this.toastr.success("Task added successfully");
-                this.getTasks().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-                    (todos) => {
-                        this.todos$.next(todos);
-                    },
-                    (error) => {
-                        console.error('Error fetching tasks after adding a new todo:', error);
-                        this.toastr.error("'Error fetching tasks after adding a new todo")
-                    }
-                );
+                try{
+
+                     await this.getTasks()
+                }catch(error){
+                    console.error('Error fetching tasks after adding a new todo:', error);
+                    this.toastr.error("'Error fetching tasks after adding a new todo");
+                }
             },
             (error) => {
                 console.error('Error adding task', error);
@@ -96,20 +103,16 @@ export class TodoService implements OnDestroy{
                 this.updateTask(id, todo).pipe(
                     takeUntil(this.ngUnsubscribe) 
                 ).subscribe(
-                    () => {
+                    async() => {
                         console.log('Task updated successfully');
                         this.toastr.success("Task updated successfully");
-                        this.getTasks().pipe(
-                            takeUntil(this.ngUnsubscribe) 
-                        ).subscribe(
-                            (todos) => {
-                                this.todos$.next(todos);
-                            },
-                            (error) => {
+                        try{
+                            await this.getTasks();
+                        }catch(error) {
                                 console.error('Error fetching tasks after updating a new todo:', error);
                                 this.toastr.error("'Error fetching tasks after adding a new todo")
-                            }
-                        );
+                        }
+                    
                     },
                     (error) => {
                         console.error('Error updating task', error);
@@ -132,6 +135,7 @@ export class TodoService implements OnDestroy{
         return this.http.delete(this.apiUrl);
   }
     removeTodo(id: string){
+        
         const updatedTodos = this.todos$
         .getValue()
         .filter(todo =>
@@ -139,50 +143,38 @@ export class TodoService implements OnDestroy{
             this.deleteTask(id).pipe(
                 takeUntil(this.ngUnsubscribe) 
             ).subscribe(
-                () => {
+                async() => {
                     console.log('Task deleted successfully');
-                    this.toastr.success("Task deleted successfully");
-                    this.getTasks().pipe(
-                        takeUntil(this.ngUnsubscribe) 
-                    ).subscribe(
-                        (todos) => {
-                            this.todos$.next(todos);
-                        },
-                        (error) => {
-                            console.error('Error fetching tasks after deleting a new todo:', error);
-                            this.toastr.error("'Error fetching tasks after adding a new todo")
-
-                        }
-                    );
+                    this.toastr.success("Task deleted successfully")
+                    try{
+                        await this.getTasks();
+                    }
+                    catch(error){
+                        console.error('Error fetching tasks after deleting a new todo:', error);
+                        this.toastr.error("'Error fetching tasks after adding a new todo")
+                    }  
+                    
                 },
                 (error) => {
                     console.error('Error updating task', error);
                     this.todos$.next([...this.todos$.getValue()]);
                 }
-            )
-            )
-        this.todos$.next(updatedTodos)
+            ))
     }
 
     removeAllTasks(): void {
         this.deleteAllTasks()
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(
-            (response) => {
+            async(response) => {
               console.log('All tasks deleted successfully', response);
               this.toastr.success("All tasks deleted successfully");
-
-              this.getTasks()
-                .pipe(takeUntil(this.ngUnsubscribe))
-                .subscribe(
-                  (todos) => {
-                    this.todos$.next(todos);
-                  },
-                  (error) => {
-                    console.error('Error fetching tasks after deleting all tasks:', error);
-                    this.toastr.error("Error fetching tasks after deleting all tasks");
-                  }
-                );
+              try {
+                await this.getTasks()
+              } catch (error) {
+                console.error('Error fetching tasks after deleting all tasks:', error);
+                this.toastr.error("Error fetching tasks after deleting all tasks");
+              }
             },
             (error) => {
               console.error('Error deleting tasks:', error);
